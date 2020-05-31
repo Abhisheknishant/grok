@@ -64,6 +64,13 @@ using namespace TCLAP;
 
 using namespace grk;
 
+//#define GRK_TEST_SYNTHESIS
+#ifdef GRK_TEST_SYNTHESIS
+#include "Synthesis.h"
+#include "Synthesis.cpp"
+#endif
+
+
 namespace grk {
 
 int32_t getValue(uint32_t i){
@@ -232,6 +239,10 @@ int main(int argc, char** argv)
 		std::chrono::duration<double> elapsed;
 
 		start = std::chrono::high_resolution_clock::now();
+#ifdef GRK_TEST_SYNTHESIS
+	    Synthesis<128,128> synth;
+	    synth.test(size);
+#else
 		bool rc = false;
 		if (forward){
 			Wavelet w;
@@ -243,6 +254,7 @@ int main(int argc, char** argv)
 				rc = decode_53(tileProcessor.get(), &tilec, tilec.numresolutions);
 		}
 		assert(rc);
+#endif
 		finish = std::chrono::high_resolution_clock::now();
 		elapsed = finish - start;
 		spdlog::info("{} dwt {} with {:02d} threads: {} ms",
