@@ -64,7 +64,7 @@ using namespace TCLAP;
 
 using namespace grk;
 
-//#define GRK_TEST_SYNTHESIS
+#define GRK_TEST_SYNTHESIS
 #ifdef GRK_TEST_SYNTHESIS
 #include "Synthesis.h"
 #include "Synthesis.cpp"
@@ -240,7 +240,7 @@ int main(int argc, char** argv)
 
 		start = std::chrono::high_resolution_clock::now();
 #ifdef GRK_TEST_SYNTHESIS
-	    Synthesis<128,128> synth;
+	    Synthesis<int32_t, 128,128> synth;
 	    synth.test(size);
 #else
 		bool rc = false;
