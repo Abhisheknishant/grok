@@ -162,7 +162,6 @@ bool T1Part1::decompress(decodeBlockInfo *block) {
 
 	cblk_dec_t cblkopj;
 	memset(&cblkopj, 0, sizeof(cblk_dec_t));
-	cblkopj.numchunks = 1;
 	cblkopj.chunks = &chunk;
 	cblkopj.x0 = block->x;
 	cblkopj.y0 = block->y;

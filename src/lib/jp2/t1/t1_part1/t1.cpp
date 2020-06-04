@@ -1152,18 +1152,10 @@ static int t1_enc_is_term_pass(cblk_enc_t *cblk, uint32_t cblksty,
  * Deallocate the encoding data of the given precinct.
  */
 void t1_code_block_enc_deallocate(cblk_enc_t *code_block) {
-	grk::grok_free(code_block->layers);
-	code_block->layers = nullptr;
 	grk::grok_free(code_block->passes);
 	code_block->passes = nullptr;
 }
 static bool t1_code_block_enc_allocate(cblk_enc_t *p_code_block) {
-	if (!p_code_block->layers) {
-		p_code_block->layers = (layer_t*) grk::grk_calloc(100,
-				sizeof(layer_t));
-		if (!p_code_block->layers)
-			return false;
-	}
 	if (!p_code_block->passes) {
 		p_code_block->passes = (pass_t*) grk::grk_calloc(100,
 				sizeof(pass_t));
@@ -1257,7 +1249,7 @@ double t1_encode_cblk(t1_info *t1, cblk_enc_t *cblk, uint32_t max,
 				else
 					mqc_flush_enc(mqc);
 			}
-			pass->term = 1;
+			pass->term = true;
 			pass->rate = mqc_numbytes_enc(mqc);
 		} else {
 			/* Non terminated pass */
@@ -1278,7 +1270,7 @@ double t1_encode_cblk(t1_info *t1, cblk_enc_t *cblk, uint32_t max,
 				if (mqc->ct < 5)
 					rate_extra_bytes++;
 			}
-			pass->term = 0;
+			pass->term = false;
 			pass->rate = mqc_numbytes_enc(mqc) + rate_extra_bytes;
 		}
 
