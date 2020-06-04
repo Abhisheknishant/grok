@@ -26,6 +26,21 @@ matrix:
           - ubuntu-toolchain-r-test
         packages:
           - g++-10
+  - os: linux
+    arch: arm64
+    dist: bionic 
+    sudo: required
+    compiler: g++-10
+    env: 
+      - GROK_CI_BUILD_CONFIGURATION=Release GROK_CI_INCLUDE_IF_DEPLOY=1 GROK_NONCOMMERCIAL=1
+      - MATRIX_EVAL="CC=gcc-10 && CXX=g++-10"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+          - g++-10
+
 before_install:
     - eval "${MATRIX_EVAL}"
 install:
